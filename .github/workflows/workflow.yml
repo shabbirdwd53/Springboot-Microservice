@@ -49,7 +49,7 @@ jobs:
         context: ./
         file: ./user-service/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/user-service:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/user-service:latest
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
