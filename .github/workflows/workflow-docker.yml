@@ -27,7 +27,11 @@ jobs:
       with:
         java-version: 11
         server-id: docker.io
-        server-username: ${{ secrets.DOCKER_USERNAME }}
-        server-password: ${{ secrets.DOCKER_PASSWORD }}
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
     - name: Build and Push User Service
       run: mvn package dockerfile:push --file user-service/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
