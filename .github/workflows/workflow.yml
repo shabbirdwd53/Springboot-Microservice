@@ -21,35 +21,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check Out Repo 
-      uses: actions/checkout@v2
-    
+    - uses: actions/checkout@v2
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    
-    - name: Build User Service
-      run: mvn package --file user-service/pom.xml
-    
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        server-id: docker.io
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
 
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v1
+    - name: Build and Push user-service
+      run: mvn package dockerfile:push --file user-service/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push User-Service Docker Image
-      id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-        context: ./
-        file: ./user-service/Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/user-service:latest
+    - name: Build and Push department-service
+      run: mvn package dockerfile:push --file department-service/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
+    - name: Build and Push cloud-config-server
+      run: mvn package dockerfile:push --file cloud-config-server/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push cloud-gateway
+      run: mvn package dockerfile:push --file cloud-gateway/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push hystrix-dashboard
+      run: mvn package dockerfile:push --file hystrix-dashboard/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+
+    - name: Build and Push ervice-registry
+      run: mvn package dockerfile:push --file ervice-registry/pom.xml
+      env:
+          MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
