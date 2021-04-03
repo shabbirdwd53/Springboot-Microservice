@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dailycodebuffer</groupId>
 	<artifactId>service-registry</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>service-registry</name>
 	<description>service-registry</description>
 
@@ -56,6 +56,35 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.13</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>dailycodebuffer/service-registry</repository>
+					<tag>${project.version}</tag>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+				</configuration>
+				<dependencies>
+					<!-- To make this work on JDK 9+ -->
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>javax.activation-api</artifactId>
+						<version>1.2.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 		</plugins>
 	</build>
 
