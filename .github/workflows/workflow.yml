@@ -61,8 +61,8 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 
-    - name: Build and Push ervice-registry
-      run: mvn package dockerfile:push --file ervice-registry/pom.xml
+    - name: Build and Push service-registry
+      run: mvn package dockerfile:push --file service-registry/pom.xml
       env:
           MAVEN_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
