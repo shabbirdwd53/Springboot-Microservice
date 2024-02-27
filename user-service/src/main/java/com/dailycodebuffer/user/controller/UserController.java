@@ -18,15 +18,11 @@ public class UserController {
 
     @PostMapping("/")
     public User saveUser(@RequestBody User user) {
-        log.info("Inside saveUser of UserController");
+        System.out.println("3:10 Anubhav added his first commit");
         return userService.saveUser(user);
     }
 
-    @GetMapping("/{id}")
-    public ResponseTemplateVO getUserWithDepartment(@PathVariable("id") Long userId) {
-        log.info("Inside getUserWithDepartment of UserController");
-        return userService.getUserWithDepartment(userId);
-    }
+
 
 
 }
