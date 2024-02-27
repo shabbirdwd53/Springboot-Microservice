@@ -19,6 +19,7 @@ public class UserController {
     @PostMapping("/")
     public User saveUser(@RequestBody User user) {
         System.out.println("3:10 Anubhav added his first commit");
+        System.out.println("4:05 Anubhav added his second commit");
         return userService.saveUser(user);
     }
 
